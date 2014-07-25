@@ -38,7 +38,7 @@ public class SimpleMatch {
         this.s = s;
         pl = p.length();
         sl = s.length();
-        if (p == null || s == null) {
+        if (pl == 0 || sl == 0) {
             throw new IllegalArgumentException(
                     "Pattern and String must have at least one character");
         }
@@ -134,8 +134,7 @@ public class SimpleMatch {
 
     public boolean match() {
         if (pob > sob) {
-            throw new IllegalArgumentException(
-                    "String length cannot be larger than pattern length");
+            return false;
         }
         while (z != State.END) {
             calcState();
