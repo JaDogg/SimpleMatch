@@ -76,7 +76,7 @@ public class SimpleMatch {
         }
 
         if (z == State.EAGER) {
-            if(mn()){
+            if (mn()) {
                 ipp();
             }
             ips();
@@ -137,11 +137,14 @@ public class SimpleMatch {
             throw new IllegalArgumentException(
                     "String length cannot be larger than pattern length");
         }
-        while(z!=State.END){
+        while (z != State.END) {
             calcState();
             eat();
         }
         return (m == null || m);
     }
 
+    public static boolean match(String p, String s) throws IllegalArgumentException {
+        return new SimpleMatch(p, s).match();
+    }
 }
