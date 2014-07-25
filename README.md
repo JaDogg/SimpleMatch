@@ -2,9 +2,7 @@ SimpleMatch
 ===========
 
 Simple Pattern Matcher for Java 
-[![Build Status](https://api.travis-ci.org/JaDogg/SimpleMatch.svg?branch=master)](https://travis-ci.org/JaDogg/SimpleMatch)
-
-What it does ?
+[![Travis CI Build Status](https://travis-ci.org/JaDogg/SimpleMatch.svg?branch=master)](https://travis-ci.org/JaDogg/SimpleMatch)
 ---
 1. Matches a `?` for any single character
 1. Matches an `*` for any character
