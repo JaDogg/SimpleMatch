@@ -3,7 +3,7 @@ SimpleMatch
 
 Simple Pattern Matcher for Java
 
-Travis-CI : [![Build Status](https://travis-ci.org/JaDogg/SimpleMatch.svg?branch=master)](https://travis-ci.org/JaDogg/SimpleMatch)
+Travis-CI [![Build Status](https://travis-ci.org/JaDogg/SimpleMatch.svg?branch=master)](https://travis-ci.org/JaDogg/SimpleMatch)
 
 What it does ?
 ---
