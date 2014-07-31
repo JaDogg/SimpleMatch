@@ -42,7 +42,7 @@ public class SimpleMatchTest {
 
     @Test
     public void test6() {
-        SimpleMatch m6 = new SimpleMatch("avenra", "avenra");
+        SimpleMatch m6 = new SimpleMatch("bhathiya", "bhathiya");
         Assert.assertTrue(m6.match());
     }
 
@@ -63,43 +63,69 @@ public class SimpleMatchTest {
         SimpleMatch m9 = new SimpleMatch("/img/abc.jpg", "/img/abc.jpg");
         Assert.assertTrue(m9.match());
     }
-    
-   @Test
+
+    @Test
     public void test11() {
         SimpleMatch m9 = new SimpleMatch("/x/*/z/abc.jpg", "/x/a/z/abc.jpg");
         Assert.assertTrue(m9.match());
     }
-    
-    
+
+    @Test
+    public void test12() {
+        SimpleMatch m9 = new SimpleMatch("/x/*/z/abc.jpg", "/x/a/j/abc.jpg");
+        Assert.assertFalse(m9.match());
+    }
+
+    @Test
+    public void test13() {
+        SimpleMatch m9 = new SimpleMatch("a", "a");
+        Assert.assertTrue(m9.match());
+    }
+
+    @Test
+    public void test14() {
+        SimpleMatch m9 = new SimpleMatch("a", "b");
+        Assert.assertFalse(m9.match());
+    }
+
+    @Test
+    public void test15() {
+        SimpleMatch m9 = new SimpleMatch("aa", "ab");
+        Assert.assertFalse(m9.match());
+    }
+
     @Test
     public void test10() {
-        
+        NamedMatchList<String> ml = new NamedMatchList<String>();
+
+        String i1 = "all in x/y/z/";
+        String i2 = "all /z/abc.jpg in /x/";
+        String i3 = "all in x";
+        String i4 = "all in root";
+        String i5 = "unknown";
         //matching set of paths
-        
         String[][] patterns = {
-            {"all in x/y/z/","/x/y/z/*"},
-            {"all /z/abc.jpg in /x/","/x/*/z/abc.jpg"},
-            {"all in x","/x/*"},
-            {"root folder","/*"},
-            {"unknown","*"}
+            {i1, "/x/y/z/*"},
+            {i2, "/x/*/z/abc.jpg"},
+            {i3, "/x/*"},
+            {i4, "/*"},
+            {i5, "*"}
         };
-        
-        String[] paths = {
-            "/x/y/z/file.png",
-            "/x/abba/z/abc.jpg",
-            "/x/n/z/file.png",
-            "/abc",
-        };
-        
-        for(String path:paths){
-            for(String[] pattern : patterns){
-                if(SimpleMatch.match(pattern[1], path)){
-                    System.out.printf("%s\t\t\t\t%s\n",pattern[0],path);
-                    break;
-                }
-            }
+
+        for (String[] pat : patterns) {
+            ml.add(pat[0], pat[1]);
         }
+
+        String[][] paths = {
+            {i1, "/x/y/z/file.png"},
+            {i2, "/x/abba/z/abc.jpg"},
+            {i3, "/x/n/z/file.png"},
+            {i4, "/abc/"}};
+
+        for (String[] path : paths) {
+            Assert.assertTrue(path[0].equals(ml.match(path[1])));
+        }
+
         
-        Assert.assertTrue(true);
     }
 }

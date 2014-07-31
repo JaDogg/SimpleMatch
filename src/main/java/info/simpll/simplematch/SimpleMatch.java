@@ -25,7 +25,7 @@ public class SimpleMatch {
     private int pp;
     private int ps;
     private State z;
-    private Boolean m = null;
+    private boolean m = false;
 
     public SimpleMatch(String p, String s) {
 
@@ -48,6 +48,13 @@ public class SimpleMatch {
         ps = 0;
         z = State.JUST_STARTED;
 
+    }
+
+    public SimpleMatch(String p, String s, int pp, int ps) {
+
+        this(p, s);
+        this.pp = pp;
+        this.ps = ps;
     }
 
     private void calcState() {
@@ -74,10 +81,14 @@ public class SimpleMatch {
         if (z == State.END) {
             return;
         }
-
+        
+        m = false;
+        
         if (z == State.EAGER) {
-            if (mn()) {
-                ipp();
+            SimpleMatch smo = new SimpleMatch(p, s, pp + 1, ps + 1);
+            if (smo.match()) {
+                z = State.END;
+                m = true;
                 return;
             }
             ips();
@@ -85,6 +96,7 @@ public class SimpleMatch {
             if (mo()) {
                 ips();
                 ipp();
+                m = true;
             } else {
                 z = State.END;
                 m = false;
@@ -141,11 +153,12 @@ public class SimpleMatch {
             calcState();
             eat();
         }
-        return (m == null || m);
+        return m;
     }
 
     public static boolean match(String p, String s) throws
             IllegalArgumentException {
         return new SimpleMatch(p, s).match();
     }
+
 }
