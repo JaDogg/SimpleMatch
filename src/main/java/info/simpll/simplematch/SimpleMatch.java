@@ -5,7 +5,7 @@ package info.simpll.simplematch;
  *
  * @author Bhathiya Perera
  */
-public class SimpleMatch {
+public class SimpleMatch implements Match{
 
     private static enum State {
 
@@ -145,6 +145,7 @@ public class SimpleMatch {
         ps++;
     }
 
+    @Override
     public boolean match() {
         if (pob > sob) {
             return false;
