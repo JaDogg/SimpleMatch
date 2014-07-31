@@ -17,7 +17,7 @@ public class SimpleMatchTest {
 
     @Test
     public void test2() {
-        SimpleMatch m2 = new SimpleMatch("a*b", "abj");
+        SimpleMatch m2 = new SimpleMatch("a*b", "anj");
         Assert.assertFalse(m2.match());
     }
 
@@ -57,10 +57,49 @@ public class SimpleMatchTest {
         SimpleMatch m8 = new SimpleMatch("bhathiya", "blah");
         Assert.assertFalse(m8.match());
     }
-    
+
     @Test
     public void test9() {
         SimpleMatch m9 = new SimpleMatch("/img/abc.jpg", "/img/abc.jpg");
         Assert.assertTrue(m9.match());
-    }    
+    }
+    
+   @Test
+    public void test11() {
+        SimpleMatch m9 = new SimpleMatch("/x/*/z/abc.jpg", "/x/a/z/abc.jpg");
+        Assert.assertTrue(m9.match());
+    }
+    
+    
+    @Test
+    public void test10() {
+        
+        //matching set of paths
+        
+        String[][] patterns = {
+            {"all in x/y/z/","/x/y/z/*"},
+            {"all /z/abc.jpg in /x/","/x/*/z/abc.jpg"},
+            {"all in x","/x/*"},
+            {"root folder","/*"},
+            {"unknown","*"}
+        };
+        
+        String[] paths = {
+            "/x/y/z/file.png",
+            "/x/abba/z/abc.jpg",
+            "/x/n/z/file.png",
+            "/abc",
+        };
+        
+        for(String path:paths){
+            for(String[] pattern : patterns){
+                if(SimpleMatch.match(pattern[1], path)){
+                    System.out.printf("%s\t\t\t\t%s\n",pattern[0],path);
+                    break;
+                }
+            }
+        }
+        
+        Assert.assertTrue(true);
+    }
 }

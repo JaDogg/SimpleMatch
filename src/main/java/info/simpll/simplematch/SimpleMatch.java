@@ -78,6 +78,7 @@ public class SimpleMatch {
         if (z == State.EAGER) {
             if (mn()) {
                 ipp();
+                return;
             }
             ips();
         } else if (z == State.NORMAL) {
@@ -143,7 +144,8 @@ public class SimpleMatch {
         return (m == null || m);
     }
 
-    public static boolean match(String p, String s) throws IllegalArgumentException {
+    public static boolean match(String p, String s) throws
+            IllegalArgumentException {
         return new SimpleMatch(p, s).match();
     }
 }
