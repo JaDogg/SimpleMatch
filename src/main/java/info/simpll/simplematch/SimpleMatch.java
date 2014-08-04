@@ -5,173 +5,163 @@ package info.simpll.simplematch;
  *
  * @author Bhathiya Perera
  */
-public class SimpleMatch implements Match{
+public class SimpleMatch implements Match {
 
+    //state enums
     private static enum State {
 
         JUST_STARTED, NORMAL, EAGER, END
     }
 
-    private final int pl; // pattern length
-    private final int pob; // pattern out bound
-    private final int sl; // string length
-    private final int sob; // string out bound
-    private final String p; // pattern
-    private final String s; // string to match
-
+    //constants
     private static final char MATCH_ALL = '*';
     private static final char MATCH_ONE = '?';
 
-    private int pp; // position of pattern
-    private int ps; // position of string
-    private State z; // state
-    private boolean m = false; // is match
+    private final int ptnOutBound; // pattern out bound
+    private final int strOutBound; // string out bound
+    private final String pattern; // pattern
+    private final String matchString; // string to match
 
-    public SimpleMatch(String p, String s) {
+    private int ptnPosition; // position of pattern
+    private int strPosition; // position of string
+    private State state = State.JUST_STARTED; // state
+    private boolean matchFound = false; // is match
 
-        if (p == null || s == null) {
+    public SimpleMatch(String pattern, String matchStr) {
+
+        if (pattern == null || matchStr == null) {
             throw new IllegalArgumentException(
                     "Pattern and String must not be null");
         }
 
-        this.p = p;
-        this.s = s;
-        pl = p.length();
-        sl = s.length();
+        this.pattern = pattern;
+        this.matchString = matchStr;
+        int pl = pattern.length();
+        int sl = matchStr.length();
         if (pl == 0 || sl == 0) {
             throw new IllegalArgumentException(
                     "Pattern and String must have at least one character");
         }
-        pob = pl - 1;
-        sob = sl - 1;
-        pp = 0;
-        ps = 0;
-        z = State.JUST_STARTED;
+        ptnOutBound = pl - 1;
+        strOutBound = sl - 1;
+        ptnPosition = 0;
+        strPosition = 0;
 
     }
 
     private SimpleMatch(String p, String s, int pp, int ps) {
 
         this(p, s);
-        this.pp = pp;
-        this.ps = ps;
+        this.ptnPosition = pp;
+        this.strPosition = ps;
     }
 
     private void calcState() {
         //calculate state
-        if (z == State.END) {
+        if (state == State.END) {
             return;
         }
 
-        if (!psafe() || !ssafe()) {
-            z = State.END;
-        } else if (pc() == MATCH_ALL) {
-            if (!pnsafe()) {
-                z = State.END;
-                m = true;
+        if (!patternCheckBound() || !matchStrCheckBound()) {
+            state = State.END;
+        } else if (patternChar() == MATCH_ALL) {
+            if (!patternNextCheckBound()) {
+                state = State.END;
+                matchFound = true;
             } else {
-                z = State.EAGER;
+                state = State.EAGER;
             }
         } else {
-            z = State.NORMAL;
+            state = State.NORMAL;
         }
     }
 
     private void eat() {
         //eat a character
-        if (z == State.END) {
+        if (state == State.END) {
             return;
         }
-        
-        m = false;
-        
-        if (z == State.EAGER) {
-            SimpleMatch smo = new SimpleMatch(p, s, pp + 1, ps + 1);
+
+        matchFound = false;
+
+        if (state == State.EAGER) {
+            SimpleMatch smo = new SimpleMatch(pattern, matchString, ptnPosition + 1, strPosition
+                    + 1);
             if (smo.match()) {
-                z = State.END;
-                m = true;
+                state = State.END;
+                matchFound = true;
                 return;
             }
-            ips();
-        } else if (z == State.NORMAL) {
-            if (mo()) {
-                ips();
-                ipp();
-                m = true;
+            strPosition++;
+        } else if (state == State.NORMAL) {
+            if (matchOne()) {
+                strPosition++;
+                ptnPosition++;
+                matchFound = true;
             } else {
-                z = State.END;
-                m = false;
+                state = State.END;
             }
         }
     }
 
-    private boolean mo() {
+    private boolean matchOne() {
         // match one
-        char pc = pc();
-        return (pc == MATCH_ONE || pc == sc());
+        char pc = patternChar();
+        return (pc == MATCH_ONE || pc == matchStrChar());
     }
 
-    private char pc() {
+    private char patternChar() {
         // pattern current char
-        return p.charAt(pp);
+        return pattern.charAt(ptnPosition);
     }
 
-    private char sc() {
+    private char matchStrChar() {
         // str current char
-        return s.charAt(ps);
+        return matchString.charAt(strPosition);
     }
 
-    private boolean psafe() {
+    private boolean patternCheckBound() {
         //pattern position bound check
-        return pp <= pob;
+        return ptnPosition <= ptnOutBound;
     }
 
-    private boolean pnsafe() {
+    private boolean patternNextCheckBound() {
         //pattern next position bound check
-        return (pp + 1) <= pob;
+        return (ptnPosition + 1) <= ptnOutBound;
     }
 
-    private boolean ssafe() {
+    private boolean matchStrCheckBound() {
         //string bound check
-        return ps <= sob;
+        return strPosition <= strOutBound;
     }
-
-    private void ipp() {
-        //increase position of pattern
-        pp++;
-    }
-
-    private void ips() {
-        //increate position of string
-        ps++;
-    }
-
     /**
      * Match and return result
+     *
      * @return true if match
      */
     @Override
     public boolean match() {
-        if (pob > sob) {
+        if (ptnOutBound > strOutBound) {
             return false;
         }
-        while (z != State.END) {
+        while (state != State.END) {
             calcState();
             eat();
         }
-        return m;
+        return matchFound;
     }
 
     /**
      * Match and return result
-     * @param p pattern
-     * @param s string to match
+     *
+     * @param pattern pattern
+     * @param matchStr string to match
      * @return true if match
-     * @throws IllegalArgumentException 
+     * @throws IllegalArgumentException
      */
-    public static boolean match(String p, String s) throws
+    public static boolean match(String pattern, String matchStr) throws
             IllegalArgumentException {
-        return new SimpleMatch(p, s).match();
+        return new SimpleMatch(pattern, matchStr).match();
     }
 
 }

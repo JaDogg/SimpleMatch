@@ -10,48 +10,47 @@ import java.util.ArrayList;
  */
 public class SplitMatch implements Match {
 
-    private final String s;
-    private final String p;
-    private final int pl;
-    private final int sl;
-
-    private String[] sa;
-    private String[] pa;
+    private final String matchStr;
+    private final String pattern;
+    private final int ptnLength;
+    private final int matchStrLength;
+    private String[] matchStrParts;
+    private String[] patternParts;
 
     /**
      * SplitMatch
      *
-     * @param p pattern , delimiter = c
-     * @param s string , delimiter = c
-     * @param c char to split from
+     * @param pattern pattern , delimiter = c
+     * @param matchStr string , delimiter = c
+     * @param delimiter char to split from
      */
-    public SplitMatch(String p, String s, char c) {
+    public SplitMatch(String pattern, String matchStr, char delimiter) {
 
-        if (p == null || s == null) {
+        if (pattern == null || matchStr == null) {
             throw new IllegalArgumentException(
                     "Pattern and String must not be null");
         }
 
-        this.p = p;
-        this.s = s;
-        pl = p.length();
-        sl = s.length();
-        if (pl == 0 || sl == 0) {
+        this.pattern = pattern;
+        this.matchStr = matchStr;
+        ptnLength = pattern.length();
+        matchStrLength = matchStr.length();
+        if (ptnLength == 0 || matchStrLength == 0) {
             throw new IllegalArgumentException(
                     "Pattern and String must have at least one character");
         }
-        sa = split(s, c);
-        pa = split(p, c);
+        matchStrParts = split(matchStr, delimiter);
+        patternParts = split(pattern, delimiter);
 
     }
 
-    private String[] split(String s, char c) {
+    private String[] split(String strToSplit, char delimiter) {
         //split string s, using char c
         ArrayList<String> arr = new ArrayList<String>();
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < s.length(); i++) {
-            char at = s.charAt(i);
-            if (at == c) {
+        for (int i = 0; i < strToSplit.length(); i++) {
+            char at = strToSplit.charAt(i);
+            if (at == delimiter) {
                 arr.add(sb.toString());
                 sb = new StringBuilder();
             } else {
@@ -62,12 +61,13 @@ public class SplitMatch implements Match {
     }
 
     private boolean splitMatch() {
-        if (pl > sl || pa.length != sa.length) {
+        if (ptnLength > matchStrLength || patternParts.length
+                != matchStrParts.length) {
             return false;
         }
-        for (int i = 0; i < sa.length; i++) {
-            if (sa[i].length() == 0 && pa[i].length() == 0) {
-            } else if (!SimpleMatch.match(pa[i], sa[i])) {
+        for (int i = 0; i < matchStrParts.length; i++) {
+            if (matchStrParts[i].length() == 0 && patternParts[i].length() == 0) {
+            } else if (!SimpleMatch.match(patternParts[i], matchStrParts[i])) {
                 return false;
             }
         }
@@ -81,20 +81,22 @@ public class SplitMatch implements Match {
      */
     @Override
     public boolean match() {
-        boolean sim = SimpleMatch.match(p, s); //if direct match
+        boolean sim = SimpleMatch.match(pattern, matchStr); //if direct match
         return (sim && splitMatch());
     }
 
     /**
      * Match and return result
-     * @param p pattern , delimiter = c
-     * @param s string to match , delimiter = c
-     * @param c char to split from 
+     *
+     * @param pattern pattern , delimiter = c
+     * @param matchStr string to match , delimiter = c
+     * @param delimiter char to split from
      * @return true if match
-     * @throws IllegalArgumentException 
+     * @throws IllegalArgumentException
      */
-    public static boolean match(String p, String s, char c) throws
+    public static boolean match(String pattern, String matchStr, char delimiter)
+            throws
             IllegalArgumentException {
-        return new SplitMatch(p, s, c).match();
+        return new SplitMatch(pattern, matchStr, delimiter).match();
     }
 }

@@ -52,12 +52,12 @@ public class NamedMatchList<T> {
 
     /**
      * match and return identifier;
-     * @param s string to consider
+     * @param matchStr string to consider
      * @return identifier of pattern if matched else null;
      */
-    public T match(String s) {
+    public T match(String matchStr) {
         for (NamedPattern<T> m : queue) {
-            if (SimpleMatch.match(m.getPattern(), s)) {
+            if (SimpleMatch.match(m.getPattern(), matchStr)) {
                 return m.getIdentifier();
             }
         }
