@@ -50,7 +50,7 @@ public class SimpleMatch implements Match{
 
     }
 
-    public SimpleMatch(String p, String s, int pp, int ps) {
+    private SimpleMatch(String p, String s, int pp, int ps) {
 
         this(p, s);
         this.pp = pp;
