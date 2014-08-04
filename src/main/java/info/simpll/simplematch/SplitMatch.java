@@ -18,6 +18,13 @@ public class SplitMatch implements Match {
     private String[] sa;
     private String[] pa;
 
+    /**
+     * SplitMatch
+     *
+     * @param p pattern , delimiter = c
+     * @param s string , delimiter = c
+     * @param c char to split from
+     */
     public SplitMatch(String p, String s, char c) {
 
         if (p == null || s == null) {
@@ -39,6 +46,7 @@ public class SplitMatch implements Match {
     }
 
     private String[] split(String s, char c) {
+        //split string s, using char c
         ArrayList<String> arr = new ArrayList<String>();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
@@ -66,12 +74,25 @@ public class SplitMatch implements Match {
         return true;
     }
 
+    /**
+     * Match and return result
+     *
+     * @return true if match
+     */
     @Override
     public boolean match() {
         boolean sim = SimpleMatch.match(p, s); //if direct match
         return (sim && splitMatch());
     }
 
+    /**
+     * Match and return result
+     * @param p pattern , delimiter = c
+     * @param s string to match , delimiter = c
+     * @param c char to split from 
+     * @return true if match
+     * @throws IllegalArgumentException 
+     */
     public static boolean match(String p, String s, char c) throws
             IllegalArgumentException {
         return new SplitMatch(p, s, c).match();

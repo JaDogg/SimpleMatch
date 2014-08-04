@@ -12,20 +12,20 @@ public class SimpleMatch implements Match{
         JUST_STARTED, NORMAL, EAGER, END
     }
 
-    private final int pl;
-    private final int pob;
-    private final int sl;
-    private final int sob;
-    private final String p;
-    private final String s;
+    private final int pl; // pattern length
+    private final int pob; // pattern out bound
+    private final int sl; // string length
+    private final int sob; // string out bound
+    private final String p; // pattern
+    private final String s; // string to match
 
     private static final char MATCH_ALL = '*';
     private static final char MATCH_ONE = '?';
 
-    private int pp;
-    private int ps;
-    private State z;
-    private boolean m = false;
+    private int pp; // position of pattern
+    private int ps; // position of string
+    private State z; // state
+    private boolean m = false; // is match
 
     public SimpleMatch(String p, String s) {
 
@@ -58,6 +58,7 @@ public class SimpleMatch implements Match{
     }
 
     private void calcState() {
+        //calculate state
         if (z == State.END) {
             return;
         }
@@ -77,7 +78,7 @@ public class SimpleMatch implements Match{
     }
 
     private void eat() {
-
+        //eat a character
         if (z == State.END) {
             return;
         }
@@ -105,46 +106,50 @@ public class SimpleMatch implements Match{
     }
 
     private boolean mo() {
+        // match one
         char pc = pc();
         return (pc == MATCH_ONE || pc == sc());
     }
 
-    private boolean mn() {
-        return (pn() == sc());
-    }
-
     private char pc() {
+        // pattern current char
         return p.charAt(pp);
     }
 
-    private char pn() {
-        return p.charAt(pp + 1);
-    }
-
     private char sc() {
+        // str current char
         return s.charAt(ps);
     }
 
     private boolean psafe() {
+        //pattern position bound check
         return pp <= pob;
     }
 
     private boolean pnsafe() {
+        //pattern next position bound check
         return (pp + 1) <= pob;
     }
 
     private boolean ssafe() {
+        //string bound check
         return ps <= sob;
     }
 
     private void ipp() {
+        //increase position of pattern
         pp++;
     }
 
     private void ips() {
+        //increate position of string
         ps++;
     }
 
+    /**
+     * Match and return result
+     * @return true if match
+     */
     @Override
     public boolean match() {
         if (pob > sob) {
@@ -157,6 +162,13 @@ public class SimpleMatch implements Match{
         return m;
     }
 
+    /**
+     * Match and return result
+     * @param p pattern
+     * @param s string to match
+     * @return true if match
+     * @throws IllegalArgumentException 
+     */
     public static boolean match(String p, String s) throws
             IllegalArgumentException {
         return new SimpleMatch(p, s).match();
