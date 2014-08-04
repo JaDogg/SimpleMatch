@@ -17,16 +17,20 @@ public class SplitMatchTest {
 
     @Test
     public void test2() {
-        Assert.assertFalse(SplitMatch.match("/img/abc.jpg", "/img/xyz.jpg", '/'));
+        Assert.
+                assertFalse(SplitMatch.
+                        match("/img/abc.jpg", "/img/xyz.jpg", '/'));
     }
 
     @Test
     public void test3() {
-        Assert.assertTrue(SplitMatch.match("/x/*/z/abc.jpg", "/x/a/z/abc.jpg", '/'));
+        Assert.assertTrue(SplitMatch.match("/x/*/z/abc.jpg", "/x/a/z/abc.jpg",
+                '/'));
     }
 
     @Test
     public void test4() {
-        Assert.assertFalse(SplitMatch.match("/x/*/z/abc.jpg", "/x/a/j/abc.jpg" ,'/'));
+        Assert.assertFalse(SplitMatch.match("/x/*/z/abc.jpg", "/x/a/j/abc.jpg",
+                '/'));
     }
 }

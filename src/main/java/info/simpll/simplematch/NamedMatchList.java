@@ -7,9 +7,9 @@ import java.util.Queue;
  * FiFo based match list This class will match given string to <br />
  * each pattern assigned to it in the order of a queue, <br />
  * when ever a match occur it will return the associated name
- * 
- * @param <T> type of name object 
- * 
+ *
+ * @param <T> type of name object
+ *
  * @author Bhathiya
  */
 public class NamedMatchList<T> {
@@ -28,7 +28,6 @@ public class NamedMatchList<T> {
             return identifier;
         }
 
-
         public String getPattern() {
             return pattern;
         }
@@ -43,8 +42,9 @@ public class NamedMatchList<T> {
 
     /**
      * add a pattern to list
+     *
      * @param identifier
-     * @param pattern 
+     * @param pattern
      */
     public void add(T identifier, String pattern) {
         queue.add(new NamedPattern(identifier, pattern));
@@ -52,6 +52,7 @@ public class NamedMatchList<T> {
 
     /**
      * match and return identifier;
+     *
      * @param matchStr string to consider
      * @return identifier of pattern if matched else null;
      */

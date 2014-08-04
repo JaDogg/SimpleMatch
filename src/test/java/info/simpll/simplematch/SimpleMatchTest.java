@@ -5,6 +5,7 @@ import org.junit.Test;
 
 /**
  * Unit Test for SimpleMatch
+ *
  * @author Bhathiya
  */
 public class SimpleMatchTest {
@@ -94,7 +95,6 @@ public class SimpleMatchTest {
         Assert.assertFalse(m.match());
     }
 
-    
     @Test
     public void test16() {
         SimpleMatch m = new SimpleMatch("aaaa", "a");
@@ -123,7 +123,6 @@ public class SimpleMatchTest {
         Assert.assertFalse(m.match());
     }
 
-
     @Test
     public void test20() {
         SimpleMatch m = new SimpleMatch("a*b*c*d", "abbccdd");
@@ -139,6 +138,14 @@ public class SimpleMatchTest {
     @Test
     public void test22() {
         SimpleMatch m = new SimpleMatch("a*xxxxxxxxxx*", "axxxxxxxxxxxhello");
+        Assert.assertTrue(m.match());
+    }
+
+    @Test
+    public void test23() {
+        SimpleMatch m = new SimpleMatch(
+                "start*in-part-1*in-part-2*in-part-3*end",
+                "start[because]in-part-1[I'm]in-part-2[Batman]in-part-3[!]end");
         Assert.assertTrue(m.match());
     }
 }

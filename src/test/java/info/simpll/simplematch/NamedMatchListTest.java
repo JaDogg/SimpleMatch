@@ -5,10 +5,11 @@ import org.junit.Test;
 
 /**
  * Unit Test for named Match List
+ *
  * @author Bhathiya
  */
 public class NamedMatchListTest {
-    
+
     @Test
     public void test1() {
         NamedMatchList<String> ml = new NamedMatchList<String>();
@@ -41,6 +42,5 @@ public class NamedMatchListTest {
             Assert.assertTrue(path[0].equals(ml.match(path[1])));
         }
 
-        
     }
 }

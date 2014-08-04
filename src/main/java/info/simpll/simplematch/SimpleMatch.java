@@ -49,13 +49,6 @@ public class SimpleMatch implements Match {
 
     }
 
-    private SimpleMatch(String p, String s, int pp, int ps) {
-
-        this(p, s);
-        this.ptnPosition = pp;
-        this.strPosition = ps;
-    }
-
     private void calcState() {
         //calculate state
         if (state == State.END) {
@@ -85,12 +78,19 @@ public class SimpleMatch implements Match {
         matchFound = false;
 
         if (state == State.EAGER) {
-            SimpleMatch smo = new SimpleMatch(pattern, matchString, ptnPosition + 1, strPosition
-                    + 1);
-            if (smo.match()) {
+
+            int curStrPosition = strPosition;
+            int curPtnPosition = ptnPosition;
+            strPosition++;
+            ptnPosition++;
+            if (match()) {
                 state = State.END;
                 matchFound = true;
                 return;
+            } else {
+                strPosition = curStrPosition;
+                ptnPosition = curPtnPosition;
+                state = State.EAGER;
             }
             strPosition++;
         } else if (state == State.NORMAL) {
@@ -134,6 +134,7 @@ public class SimpleMatch implements Match {
         //string bound check
         return strPosition <= strOutBound;
     }
+
     /**
      * Match and return result
      *
