@@ -1,6 +1,28 @@
-package info.simpll.simplematch;
+/*
+ * The MIT License
+ *
+ * Copyright 2014 Bhathiya.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
-import java.util.ArrayList;
+package info.simpll.simplematch;
 
 /**
  * Split both pattern and string by given char and match each part using
@@ -39,26 +61,12 @@ public class SplitMatch implements Match {
             throw new IllegalArgumentException(
                     "Pattern and String must have at least one character");
         }
-        matchStrParts = split(matchStr, delimiter);
-        patternParts = split(pattern, delimiter);
+        matchStrParts = StringUtility.split(matchStr, delimiter);
+        patternParts = StringUtility.split(pattern, delimiter);
 
     }
 
-    private String[] split(String strToSplit, char delimiter) {
-        //split string s, using char c
-        ArrayList<String> arr = new ArrayList<String>();
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < strToSplit.length(); i++) {
-            char at = strToSplit.charAt(i);
-            if (at == delimiter) {
-                arr.add(sb.toString());
-                sb = new StringBuilder();
-            } else {
-                sb.append(at);
-            }
-        }
-        return arr.toArray(new String[0]);
-    }
+
 
     private boolean splitMatch() {
         if (ptnLength > matchStrLength || patternParts.length

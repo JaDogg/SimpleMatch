@@ -21,40 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package info.simpll.simplematch;
 
-import org.junit.Assert;
-import org.junit.Test;
+import java.util.ArrayList;
 
 /**
- * Unit Test for SplitMatch Class
  *
  * @author Bhathiya
  */
-public class SplitMatchTest {
+public class StringUtility {
 
-    @Test
-    public void test1() {
-        Assert.assertTrue(SplitMatch.match("same", "same", '/'));
-    }
-
-    @Test
-    public void test2() {
-        Assert.
-                assertFalse(SplitMatch.
-                        match("/img/abc.jpg", "/img/xyz.jpg", '/'));
-    }
-
-    @Test
-    public void test3() {
-        Assert.assertTrue(SplitMatch.match("/x/*/z/abc.jpg", "/x/a/z/abc.jpg",
-                '/'));
-    }
-
-    @Test
-    public void test4() {
-        Assert.assertFalse(SplitMatch.match("/x/*/z/abc.jpg", "/x/a/j/abc.jpg",
-                '/'));
+    /**
+     * Split a string using a single char delimiter
+     * @param strToSplit string to use
+     * @param delimiter delimiter
+     * @return String[] of portions
+     */
+    public static String[] split(String strToSplit, char delimiter) {
+        ArrayList<String> arr = new ArrayList<String>();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < strToSplit.length(); i++) {
+            char at = strToSplit.charAt(i);
+            if (at == delimiter) {
+                arr.add(sb.toString());
+                sb = new StringBuilder();
+            } else {
+                sb.append(at);
+            }
+        }
+        arr.add(sb.toString());
+        return arr.toArray(new String[0]);
     }
 }

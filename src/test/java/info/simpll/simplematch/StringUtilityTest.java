@@ -21,40 +21,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package info.simpll.simplematch;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Unit Test for SplitMatch Class
  *
  * @author Bhathiya
  */
-public class SplitMatchTest {
+public class StringUtilityTest {
 
     @Test
     public void test1() {
-        Assert.assertTrue(SplitMatch.match("same", "same", '/'));
+        final String str1 = "Because";
+        final String str2 = "I'm";
+        final String str3 = "Batman";
+        final char delim = ' ';
+        String[] parts = StringUtility.split(str1 + delim + str2 + delim + str3,
+                delim);
+        Assert.assertTrue(parts.length == 3);
+        Assert.assertTrue(parts[0].equals(str1));
+        Assert.assertTrue(parts[1].equals(str2));
+        Assert.assertTrue(parts[2].equals(str3));
     }
 
     @Test
     public void test2() {
-        Assert.
-                assertFalse(SplitMatch.
-                        match("/img/abc.jpg", "/img/xyz.jpg", '/'));
+        final String str1 = "";
+        final String str2 = "I'm";
+        final String str3 = "Batman";
+        final char delim = ' ';
+        String[] parts = StringUtility.split(str1 + delim + str2 + delim + str3,
+                delim);
+        Assert.assertTrue(parts.length == 3);
+        Assert.assertTrue(parts[0].equals(str1));
+        Assert.assertTrue(parts[1].equals(str2));
+        Assert.assertTrue(parts[2].equals(str3));
     }
 
     @Test
     public void test3() {
-        Assert.assertTrue(SplitMatch.match("/x/*/z/abc.jpg", "/x/a/z/abc.jpg",
-                '/'));
-    }
-
-    @Test
-    public void test4() {
-        Assert.assertFalse(SplitMatch.match("/x/*/z/abc.jpg", "/x/a/j/abc.jpg",
-                '/'));
+        final String str1 = "";
+        final char delim = ' ';
+        String[] parts = StringUtility.split(str1,
+                delim);
+        Assert.assertTrue(parts.length == 1);
+        Assert.assertTrue(parts[0].equals(str1));
     }
 }
