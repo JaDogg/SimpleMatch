@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640">
+
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>Simplematch by JaDogg</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/JaDogg/SimpleMatch">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Simplematch</h1>
+            <h2>Simple Pattern Matcher for Java</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/JaDogg/SimpleMatch/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/JaDogg/SimpleMatch/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <h1>
+<a name="simplematch-" class="anchor" href="#simplematch-"><span class="octicon octicon-link"></span></a>SimpleMatch </h1>
+
+<p>Simple Pattern Matcher for Java </p>
+
+<p><a href="https://travis-ci.org/JaDogg/SimpleMatch"><img src="https://travis-ci.org/JaDogg/SimpleMatch.png?branch=master" alt="Build Status"></a></p>
+
+<h2>
+<a name="what-does-it-do" class="anchor" href="#what-does-it-do"><span class="octicon octicon-link"></span></a>What does it do?</h2>
+
+<ol>
+<li>Matches a <code>?</code> for any single character</li>
+<li>Matches an <code>*</code> for any character</li>
+</ol><h2>
+<a name="how-to-use-" class="anchor" href="#how-to-use-"><span class="octicon octicon-link"></span></a>How to use ?</h2>
+
+<ol>
+<li>
+<code>SimpleMatch.match("a*","abcd");</code> or</li>
+<li>
+<code>SimpleMatch m = new SimpleMatch("a*", "abcdefg");</code> and call <code>m.match();</code>
+</li>
+</ol><h2>
+<a name="more-info" class="anchor" href="#more-info"><span class="octicon octicon-link"></span></a>More info</h2>
+
+<ol>
+<li>It will either return <code>true</code> or <code>false</code> or throw an <code>IllegalArgumentException</code>
+</li>
+<li>
+<code>IllegalArgumentException</code> occurs if any parameter is <code>null</code> or <code>length==0</code> </li>
+<li>Always false on <code>pattern length &gt; string length</code>
+</li>
+</ol>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/JaDogg">JaDogg</a> can be found on <a href="https://github.com/JaDogg/SimpleMatch">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="http://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
