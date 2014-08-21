@@ -8,7 +8,7 @@ Simple Pattern Matcher for Java
 What does it do?
 ---
 1. Matches a `?` for any single character
-1. Matches an `*` for any character
+1. Matches an `*` for one or more characters
 
 How to use ?
 ---
